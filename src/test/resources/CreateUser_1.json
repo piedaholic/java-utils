@@ -1,0 +1,52 @@
+{
+    "header": {
+      "source": "EXTSYS",
+      "userId": "HPSINGH",
+      "action": "Create",
+      "operation": "CreateUser",
+      "service": "UserService",
+      "messageId": "112233",
+      "remarks": "querying",
+      "blockRemarks": "querying"
+    },
+    "body": {
+      "user": {
+        "name": "luke skywalker34567",
+        "gender": "male",
+        "nationality": "tatooine",
+        "dob": "1937-03-12",
+        "email": "luke.skywalker@starwarsuniv.com",
+        "password": "lukehasntgotit",
+        "userCurrentAddressDto": {
+          "houseNumber": "300",
+          "street": "gulliver street",
+          "city": "timbaktu",
+          "province": "jamish",
+          "country": "jamre",
+          "zipCode": "167001"
+        },
+        "userPermanentAddressDto": {
+          "userId": "",
+          "houseNumber": "300",
+          "street": "gulliver street",
+          "city": "timbaktu",
+          "province": "jamish",
+          "country": "jamre",
+          "zipCode": "167001"
+        },
+        "userIdentifiersList": [
+          {
+            "idNo": "10009",
+            "idType": "yid",
+            "issuingInstitution": "govt. of jamre"
+          }
+          ,
+          {
+            "idNo": "10019",
+            "idType": "xid",
+            "issuingInstitution": "govt. of jamre"
+          }
+        ]
+      }
+    }
+}

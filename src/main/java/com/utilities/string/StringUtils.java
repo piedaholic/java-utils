@@ -12,6 +12,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +36,7 @@ import com.utilities.object.ObjectUtils;
 import com.utilities.xml.XmlUtils;
 
 public class StringUtils {
-    public static String[] Split(String main, String cmp) {
+    public static String[] split(String main, String cmp) {
 	Object[] obj = null;
 
 	try {
@@ -589,6 +591,17 @@ public class StringUtils {
 	result.append("}");
 
 	return result.toString();
+    }
+
+    public static String listToString(List<?> list) {
+	String result = "";
+	if (list != null) {
+	    Iterator<?> iterator = list.iterator();
+	    while (iterator.hasNext()) {
+		result = "[" + iterator.next().toString() + "]";
+	    }
+	}
+	return result;
     }
 
 }

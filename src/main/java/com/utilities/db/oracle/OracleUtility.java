@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import com.utilities.object.ObjectUtils;
 
 public class OracleUtility {
     public static Object getParam(Connection con, ResultSet rs, int pParamCount, String pTableName, String pFieldName)
@@ -36,8 +35,6 @@ public class OracleUtility {
 	} else {
 	    value = rs.getInt(pParamCount) + "";
 	}
-
-	value = ObjectUtils.checkForNull(value);
 	return value;
     }
 

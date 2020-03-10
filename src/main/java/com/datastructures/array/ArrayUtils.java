@@ -2,11 +2,13 @@ package com.datastructures.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import com.utilities.object.ObjectUtils;
 
@@ -211,11 +213,24 @@ public class ArrayUtils {
 	return list;
     }
 
-    public static <T> boolean isElementInArray(T[] array, T element) {
-	element = ObjectUtils.checkForNull(element);
-	Arrays.sort(array);
-	int searchIndex = Arrays.binarySearch(array, element);
-	return searchIndex >= 0;
+    public static <T extends Object> boolean isElementInArray(T[] array, T element) {
+	if (ObjectUtils.isNull(element) || ObjectUtils.isNull(array))
+	    return false;
+	else {
+	    Arrays.sort(array);
+	    int searchIndex = Arrays.binarySearch(array, element);
+	    return searchIndex >= 0;
+	}
+    }
+
+    public <T> List<T> fromArrayToList(T[] a) {
+	return Arrays.stream(a).collect(Collectors.toList());
+    }
+
+    public static <T> void fromArrayToCollection(T[] a, Collection<T> c) {
+	for (T o : a) {
+	    c.add(o); // Correct
+	}
     }
 
 }

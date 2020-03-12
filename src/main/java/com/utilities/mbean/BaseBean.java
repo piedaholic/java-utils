@@ -1,5 +1,4 @@
 package com.utilities.mbean;
 
-public class BaseBean {
-
-}
+/** The Class BaseBean. */
+public class BaseBean {}

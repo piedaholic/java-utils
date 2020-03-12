@@ -1,14 +1,26 @@
 package com.algorithms;
 
+// TODO: Auto-generated Javadoc
+/** The Class FenwickSum. */
 public class FenwickSum {
 
-    public static void main(String[] args) {
-    }
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
+  public static void main(String[] args) {}
 
-    public static long sumFenwick(long[] ft, int i) {
-	long sum = 0;
-	for (i++; i > 0; i -= i & -i)
-	    sum += ft[i];
-	return sum;
-    }
+  /**
+   * Sum fenwick.
+   *
+   * @param ft the ft
+   * @param i the i
+   * @return the long
+   */
+  public static long sumFenwick(long[] ft, int i) {
+    long sum = 0;
+    for (i++; i > 0; i -= i & -i) sum += ft[i];
+    return sum;
+  }
 }

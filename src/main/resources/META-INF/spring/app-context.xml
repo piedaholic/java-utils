@@ -7,6 +7,7 @@
 
 	<description>Example configuration to get you started.</description>
 
-	<context:component-scan base-package="com.utilities.utilities" />
+	<context:component-scan
+		base-package="com.utilities.utilities" />
 
 </beans>

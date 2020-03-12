@@ -5,47 +5,54 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
+// TODO: Auto-generated Javadoc
+/** The Class LoadPropertyFile. */
 public class LoadPropertyFile {
-	public static void main(String[] args) {
-		LoadPropertyFile loadPropFile = new LoadPropertyFile();
-		loadPropFile.printThemAll();
-	  }
 
-	  private void printThemAll() {
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
+  public static void main(String[] args) {
+    LoadPropertyFile loadPropFile = new LoadPropertyFile();
+    loadPropFile.printThemAll();
+  }
 
-		Properties prop = new Properties();
-		InputStream input = null;
+  /** Prints the them all. */
+  private void printThemAll() {
 
-		try {
+    Properties prop = new Properties();
+    InputStream input = null;
 
-			String filename = "config.properties";
-			input = getClass().getClassLoader().getResourceAsStream(filename);
-			if (input == null) {
-				System.out.println("Sorry, unable to find " + filename);
-				return;
-			}
+    try {
 
-			prop.load(input);
+      String filename = "config.properties";
+      input = getClass().getClassLoader().getResourceAsStream(filename);
+      if (input == null) {
+        System.out.println("Sorry, unable to find " + filename);
+        return;
+      }
 
-			Enumeration<?> e = prop.propertyNames();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = prop.getProperty(key);
-				System.out.println("Key : " + key + ", Value : " + value);
-			}
+      prop.load(input);
 
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+      Enumeration<?> e = prop.propertyNames();
+      while (e.hasMoreElements()) {
+        String key = (String) e.nextElement();
+        String value = prop.getProperty(key);
+        System.out.println("Key : " + key + ", Value : " + value);
+      }
 
-	  }
-
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 }

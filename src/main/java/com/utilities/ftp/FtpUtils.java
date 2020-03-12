@@ -1,5 +1,6 @@
 package com.utilities.ftp;
 
+import com.utilities.files.FileUtilities;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,258 +14,347 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 
-import com.utilities.files.FileUtilities;
-
+// TODO: Auto-generated Javadoc
+/** The Class FtpUtils. */
 public class FtpUtils {
-    public boolean ftpToSwiftSrvr(String outDir, String fileName, String unixOutDir, String oFtpServer, String oFtpId,
-	    String oFtpPwd) {
-	boolean ftpFlag = false;
-	FileInputStream fileStream = null;
 
-	try {
-	    String filePathWip = outDir + "/wip";
-	    FTPClient ftp = new FTPClient();
-	    ftp.connect(oFtpServer, 21);
-	    int reply = ftp.getReplyCode();
-	    if (!FTPReply.isPositiveCompletion(reply)) {
-		try {
-		    ftp.disconnect();
-		} catch (Exception var34) {
+  /**
+   * Ftp to swift srvr.
+   *
+   * @param outDir the out dir
+   * @param fileName the file name
+   * @param unixOutDir the unix out dir
+   * @param oFtpServer the o ftp server
+   * @param oFtpId the o ftp id
+   * @param oFtpPwd the o ftp pwd
+   * @return true, if successful
+   */
+  public boolean ftpToSwiftSrvr(
+      String outDir,
+      String fileName,
+      String unixOutDir,
+      String oFtpServer,
+      String oFtpId,
+      String oFtpPwd) {
+    boolean ftpFlag = false;
+    FileInputStream fileStream = null;
 
-		}
+    try {
+      String filePathWip = outDir + "/wip";
+      FTPClient ftp = new FTPClient();
+      ftp.connect(oFtpServer, 21);
+      int reply = ftp.getReplyCode();
+      if (!FTPReply.isPositiveCompletion(reply)) {
+        try {
+          ftp.disconnect();
+        } catch (Exception var34) {
 
-		throw new Exception("FTP server refused connection.");
-	    }
+        }
 
-	    if (!ftp.login(oFtpId, oFtpPwd)) {
+        throw new Exception("FTP server refused connection.");
+      }
 
-		throw new Exception(
-			"Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
-	    }
+      if (!ftp.login(oFtpId, oFtpPwd)) {
 
-	    ftp.setFileType(2);
-	    if (unixOutDir != null && unixOutDir.trim().length() > 0) {
-		ftp.changeWorkingDirectory(unixOutDir);
-		reply = ftp.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
-		    throw new Exception("Unable to change working directory to:" + unixOutDir);
-		}
-	    }
+        throw new Exception(
+            "Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
+      }
 
-	    File f = new File(filePathWip + "/" + FileUtilities.validateFilePath(fileName));
-	    fileStream = new FileInputStream(f);
-	    boolean retValue = ftp.storeFile(f.getName(), fileStream);
-	    if (!retValue) {
+      ftp.setFileType(2);
+      if (unixOutDir != null && unixOutDir.trim().length() > 0) {
+        ftp.changeWorkingDirectory(unixOutDir);
+        reply = ftp.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(reply)) {
+          throw new Exception("Unable to change working directory to:" + unixOutDir);
+        }
+      }
 
-		if (fileStream != null) {
-		    fileStream.close();
-		}
+      File f = new File(filePathWip + "/" + FileUtilities.validateFilePath(fileName));
+      fileStream = new FileInputStream(f);
+      boolean retValue = ftp.storeFile(f.getName(), fileStream);
+      if (!retValue) {
 
-		throw new Exception("Storing of remote file failed. ftp.storeFile() returned false.");
-	    }
+        if (fileStream != null) {
+          fileStream.close();
+        }
 
-	    try {
-		ftp.disconnect();
-	    } catch (Exception var35) {
+        throw new Exception("Storing of remote file failed. ftp.storeFile() returned false.");
+      }
 
-	    } finally {
-		if (fileStream != null) {
-		    fileStream.close();
-		}
+      try {
+        ftp.disconnect();
+      } catch (Exception var35) {
 
-	    }
-	} catch (Exception var37) {
+      } finally {
+        if (fileStream != null) {
+          fileStream.close();
+        }
+      }
+    } catch (Exception var37) {
 
-	    ftpFlag = false;
-	} finally {
-	    try {
-		if (fileStream != null) {
-		    fileStream.close();
-		}
-	    } catch (IOException var33) {
-	    }
-
-	}
-
-	return ftpFlag;
+      ftpFlag = false;
+    } finally {
+      try {
+        if (fileStream != null) {
+          fileStream.close();
+        }
+      } catch (IOException var33) {
+      }
     }
 
-    public boolean ftpsToSwiftSrvr(String outDir, String fileName, String unixOutDir, String oFtpServer, String oFtpId,
-	    String oFtpPwd, int oFtpPort) {
-	String protocol = "SSL";
-	boolean ftpFlag = true;
-	FileInputStream fileStream = null;
+    return ftpFlag;
+  }
 
-	try {
-	    String filePathWip = outDir + "/wip";
-	    FTPSClient ftps = new FTPSClient(protocol, true);
-	    ftps.connect(oFtpServer, oFtpPort);
-	    int reply = ftps.getReplyCode();
-	    if (!FTPReply.isPositiveCompletion(reply)) {
-		try {
-		    ftps.disconnect();
-		} catch (Exception var27) {
-		    System.err.println("Unable to disconnect from FTP server after server refused connection. "
-			    + var27.toString());
-		}
+  /**
+   * Ftps to swift srvr.
+   *
+   * @param outDir the out dir
+   * @param fileName the file name
+   * @param unixOutDir the unix out dir
+   * @param oFtpServer the o ftp server
+   * @param oFtpId the o ftp id
+   * @param oFtpPwd the o ftp pwd
+   * @param oFtpPort the o ftp port
+   * @return true, if successful
+   */
+  public boolean ftpsToSwiftSrvr(
+      String outDir,
+      String fileName,
+      String unixOutDir,
+      String oFtpServer,
+      String oFtpId,
+      String oFtpPwd,
+      int oFtpPort) {
+    String protocol = "SSL";
+    boolean ftpFlag = true;
+    FileInputStream fileStream = null;
 
-		throw new Exception("FTP server refused connection.");
-	    }
+    try {
+      String filePathWip = outDir + "/wip";
+      FTPSClient ftps = new FTPSClient(protocol, true);
+      ftps.connect(oFtpServer, oFtpPort);
+      int reply = ftps.getReplyCode();
+      if (!FTPReply.isPositiveCompletion(reply)) {
+        try {
+          ftps.disconnect();
+        } catch (Exception var27) {
+          System.err.println(
+              "Unable to disconnect from FTP server after server refused connection. "
+                  + var27.toString());
+        }
 
-	    if (!ftps.login(oFtpId, oFtpPwd)) {
-		throw new Exception(
-			"Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
-	    }
+        throw new Exception("FTP server refused connection.");
+      }
 
-	    ftps.enterLocalPassiveMode();
-	    ftps.execPBSZ(0L);
-	    ftps.execPROT("P");
-	    ftps.setFileType(2);
-	    if (unixOutDir != null && unixOutDir.trim().length() > 0) {
-		ftps.changeWorkingDirectory(unixOutDir);
-		reply = ftps.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
-		    throw new Exception("Unable to change working directory to:" + unixOutDir);
-		}
-	    }
+      if (!ftps.login(oFtpId, oFtpPwd)) {
+        throw new Exception(
+            "Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
+      }
 
-	    fileStream = new FileInputStream(filePathWip + File.separator + FileUtilities.validateFilePath(fileName));
-	    boolean retValue = ftps.storeFile(fileName, fileStream);
-	    if (!retValue) {
-		throw new Exception("Storing of remote file failed. ftp.storeFile() returned false.");
-	    }
+      ftps.enterLocalPassiveMode();
+      ftps.execPBSZ(0L);
+      ftps.execPROT("P");
+      ftps.setFileType(2);
+      if (unixOutDir != null && unixOutDir.trim().length() > 0) {
+        ftps.changeWorkingDirectory(unixOutDir);
+        reply = ftps.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(reply)) {
+          throw new Exception("Unable to change working directory to:" + unixOutDir);
+        }
+      }
 
-	    try {
-		ftps.disconnect();
-	    } catch (Exception var28) {
-		System.err.println("Unable to disconnect from FTP server. " + var28.toString());
-	    }
-	} catch (Exception var29) {
-	    System.err.println("Unable to disconnect from FTP server. " + var29.toString());
-	    ftpFlag = false;
-	} finally {
-	    try {
-		if (fileStream != null) {
-		    fileStream.close();
-		}
-	    } catch (IOException var26) {
-	    }
+      fileStream =
+          new FileInputStream(
+              filePathWip + File.separator + FileUtilities.validateFilePath(fileName));
+      boolean retValue = ftps.storeFile(fileName, fileStream);
+      if (!retValue) {
+        throw new Exception("Storing of remote file failed. ftp.storeFile() returned false.");
+      }
 
-	}
-
-	return ftpFlag;
+      try {
+        ftps.disconnect();
+      } catch (Exception var28) {
+        System.err.println("Unable to disconnect from FTP server. " + var28.toString());
+      }
+    } catch (Exception var29) {
+      System.err.println("Unable to disconnect from FTP server. " + var29.toString());
+      ftpFlag = false;
+    } finally {
+      try {
+        if (fileStream != null) {
+          fileStream.close();
+        }
+      } catch (IOException var26) {
+      }
     }
 
-    public static boolean moveFTPFile(String filename, String Source, String Destination, String oFtpServer,
-	    String oFtpId, String oFtpPwd) {
-	boolean status = false;
-	boolean store = false;
-	boolean delete = false;
-	FTPClient ftp = loginFTP(oFtpServer, oFtpId, oFtpPwd);
-	if (!ftp.isConnected()) {
-	    return false;
-	} else {
-	    try {
-		ftp.changeWorkingDirectory(Source);
-		int reply = ftp.getReplyCode();
-		if (!FTPReply.isPositiveCompletion(reply)) {
-		    try {
-			ftp.disconnect();
-		    } catch (Exception var17) {
-			System.err.println("Unable to disconnect from FTP server after server refused connection. "
-				+ var17.toString());
-		    }
+    return ftpFlag;
+  }
 
-		    throw new Exception("FTP server refused connection.");
-		} else {
-		    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		    ftp.retrieveFile(filename, outputStream);
-		    InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
-		    ftp.setFileType(2);
-		    ftp.changeWorkingDirectory(Destination);
-		    ftp.enterLocalPassiveMode();
-		    ftp.getReplyCode();
-		    store = ftp.storeFile(filename, is);
-		    ftp.getReplyCode();
-		    ftp.getReplyString();
-		    is.close();
-		    if (store) {
-			ftp.changeWorkingDirectory(Source);
-			delete = ftp.deleteFile(filename);
-		    }
+  /**
+   * Move FTP file.
+   *
+   * @param filename the filename
+   * @param Source the source
+   * @param Destination the destination
+   * @param oFtpServer the o ftp server
+   * @param oFtpId the o ftp id
+   * @param oFtpPwd the o ftp pwd
+   * @return true, if successful
+   */
+  public static boolean moveFTPFile(
+      String filename,
+      String Source,
+      String Destination,
+      String oFtpServer,
+      String oFtpId,
+      String oFtpPwd) {
+    boolean status = false;
+    boolean store = false;
+    boolean delete = false;
+    FTPClient ftp = loginFTP(oFtpServer, oFtpId, oFtpPwd);
+    if (!ftp.isConnected()) {
+      return false;
+    } else {
+      try {
+        ftp.changeWorkingDirectory(Source);
+        int reply = ftp.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(reply)) {
+          try {
+            ftp.disconnect();
+          } catch (Exception var17) {
+            System.err.println(
+                "Unable to disconnect from FTP server after server refused connection. "
+                    + var17.toString());
+          }
 
-		    if (store && delete) {
-			status = true;
-		    }
+          throw new Exception("FTP server refused connection.");
+        } else {
+          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+          ftp.retrieveFile(filename, outputStream);
+          InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
+          ftp.setFileType(2);
+          ftp.changeWorkingDirectory(Destination);
+          ftp.enterLocalPassiveMode();
+          ftp.getReplyCode();
+          store = ftp.storeFile(filename, is);
+          ftp.getReplyCode();
+          ftp.getReplyString();
+          is.close();
+          if (store) {
+            ftp.changeWorkingDirectory(Source);
+            delete = ftp.deleteFile(filename);
+          }
 
-		    ftp.logout();
-		    ftp.disconnect();
-		    return status;
-		}
-	    } catch (Exception var18) {
-		System.err.println("Unable to disconnect from FTP server. " + var18.toString());
-		return false;
-	    }
-	}
+          if (store && delete) {
+            status = true;
+          }
+
+          ftp.logout();
+          ftp.disconnect();
+          return status;
+        }
+      } catch (Exception var18) {
+        System.err.println("Unable to disconnect from FTP server. " + var18.toString());
+        return false;
+      }
+    }
+  }
+
+  /**
+   * Login FTP.
+   *
+   * @param oFtpServer the o ftp server
+   * @param oFtpId the o ftp id
+   * @param oFtpPwd the o ftp pwd
+   * @return the FTP client
+   */
+  public static FTPClient loginFTP(String oFtpServer, String oFtpId, String oFtpPwd) {
+    FTPClient ftp = null;
+
+    try {
+      ftp = new FTPClient();
+      ftp.connect(oFtpServer, 21);
+      int reply = ftp.getReplyCode();
+      if (!FTPReply.isPositiveCompletion(reply)) {
+        try {
+          ftp.disconnect();
+        } catch (Exception var6) {
+          System.err.println(
+              "Unable to disconnect from FTP server after server refused connection. "
+                  + var6.toString());
+        }
+
+        throw new Exception("FTP server refused connection.");
+      }
+
+      if (!ftp.login(oFtpId, oFtpPwd)) {
+        throw new Exception(
+            "Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
+      }
+    } catch (Exception var7) {
+      System.err.println("Unable to disconnect from FTP server. " + var7.toString());
     }
 
-    public static FTPClient loginFTP(String oFtpServer, String oFtpId, String oFtpPwd) {
-	FTPClient ftp = null;
+    return ftp;
+  }
 
-	try {
-	    ftp = new FTPClient();
-	    ftp.connect(oFtpServer, 21);
-	    int reply = ftp.getReplyCode();
-	    if (!FTPReply.isPositiveCompletion(reply)) {
-		try {
-		    ftp.disconnect();
-		} catch (Exception var6) {
-		    System.err.println(
-			    "Unable to disconnect from FTP server after server refused connection. " + var6.toString());
-		}
+  /**
+   * Download remote file.
+   *
+   * @param filePath the file path
+   * @param saveAs the save as
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public void downloadRemoteFile(String filePath, String saveAs) throws IOException {
+    String ftpUrl = String.format("ftp://user:password@localhost:%d" + filePath);
+    URLConnection urlConnection = new URL(ftpUrl).openConnection();
+    InputStream inputStream = urlConnection.getInputStream();
+    if (saveAs.equals("")) saveAs = new File(filePath).getName();
+    Files.copy(inputStream, new File(saveAs).toPath());
+    inputStream.close();
+  }
 
-		throw new Exception("FTP server refused connection.");
-	    }
+  /**
+   * List files.
+   *
+   * @param ftpClient the ftp client
+   * @param path the path
+   * @return the collection
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public Collection<String> listFiles(FTPClient ftpClient, String path) throws IOException {
+    FTPFile[] files = ftpClient.listFiles(path);
+    return Arrays.stream(files).map(FTPFile::getName).collect(Collectors.toList());
+  }
 
-	    if (!ftp.login(oFtpId, oFtpPwd)) {
-		throw new Exception(
-			"Unable to login to FTP server using username " + oFtpId + " and password " + oFtpPwd);
-	    }
-	} catch (Exception var7) {
-	    System.err.println("Unable to disconnect from FTP server. " + var7.toString());
-	}
+  /**
+   * Download file.
+   *
+   * @param ftp the ftp
+   * @param source the source
+   * @param destination the destination
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  void downloadFile(FTPClient ftp, String source, String destination) throws IOException {
+    FileOutputStream out = new FileOutputStream(destination);
+    ftp.retrieveFile(source, out);
+  }
 
-	return ftp;
-    }
-
-    public void downloadRemoteFile(String filePath, String saveAs) throws IOException {
-	String ftpUrl = String.format("ftp://user:password@localhost:%d" + filePath);
-	URLConnection urlConnection = new URL(ftpUrl).openConnection();
-	InputStream inputStream = urlConnection.getInputStream();
-	if (saveAs.equals(""))
-	    saveAs = new File(filePath).getName();
-	Files.copy(inputStream, new File(saveAs).toPath());
-	inputStream.close();
-    }
-
-    public Collection<String> listFiles(FTPClient ftpClient, String path) throws IOException {
-	FTPFile[] files = ftpClient.listFiles(path);
-	return Arrays.stream(files).map(FTPFile::getName).collect(Collectors.toList());
-    }
-
-    void downloadFile(FTPClient ftp, String source, String destination) throws IOException {
-	FileOutputStream out = new FileOutputStream(destination);
-	ftp.retrieveFile(source, out);
-    }
-
-    void putFileToPath(FTPClient ftp, File file, String path) throws IOException {
-	ftp.storeFile(path, new FileInputStream(file));
-    }
-
+  /**
+   * Put file to path.
+   *
+   * @param ftp the ftp
+   * @param file the file
+   * @param path the path
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  void putFileToPath(FTPClient ftp, File file, String path) throws IOException {
+    ftp.storeFile(path, new FileInputStream(file));
+  }
 }

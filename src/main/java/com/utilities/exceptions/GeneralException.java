@@ -1,37 +1,73 @@
 package com.utilities.exceptions;
 
+// TODO: Auto-generated Javadoc
+/** The Class GeneralException. */
 public class GeneralException extends RuntimeException {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	public GeneralException() {
-	}
+  /** The Constant serialVersionUID. */
+  private static final long serialVersionUID = 1L;
 
-	public GeneralException(String message) {
-		super(message);
-	}
+  /** Instantiates a new general exception. */
+  public GeneralException() {}
 
-	public GeneralException(String message, Throwable cause) {
-		super(message, cause);
-	}
+  /**
+   * Instantiates a new general exception.
+   *
+   * @param message the message
+   */
+  public GeneralException(String message) {
+    super(message);
+  }
 
-	public GeneralException(Throwable cause) {
-		super(cause);
-	}
+  /**
+   * Instantiates a new general exception.
+   *
+   * @param message the message
+   * @param cause the cause
+   */
+  public GeneralException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	public GeneralException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+  /**
+   * Instantiates a new general exception.
+   *
+   * @param cause the cause
+   */
+  public GeneralException(Throwable cause) {
+    super(cause);
+  }
 
-	@Override
-	public String getMessage() {
-		return this.toString();
-	}
+  /**
+   * Instantiates a new general exception.
+   *
+   * @param message the message
+   * @param cause the cause
+   * @param enableSuppression the enable suppression
+   * @param writableStackTrace the writable stack trace
+   */
+  public GeneralException(
+      String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
 
-	@Override
-	public String toString() {
-		return super.getMessage();
-	}
+  /*
+   * (non-Javadoc)
+   *
+   * @see java.lang.Throwable#getMessage()
+   */
+  @Override
+  public String getMessage() {
+    return this.toString();
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see java.lang.Throwable#toString()
+   */
+  @Override
+  public String toString() {
+    return super.getMessage();
+  }
 }

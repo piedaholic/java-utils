@@ -6,32 +6,53 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
+// TODO: Auto-generated Javadoc
+/** The Class FtpClient. */
 class FtpClient {
 
-    private String server;
-    private int port;
-    private String user;
-    private String password;
-    private FTPClient ftp;
+  /** The server. */
+  private String server;
 
-    // constructor
+  /** The port. */
+  private int port;
 
-    void open() throws IOException {
-	ftp = new FTPClient();
+  /** The user. */
+  private String user;
 
-	ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+  /** The password. */
+  private String password;
 
-	ftp.connect(server, port);
-	int reply = ftp.getReplyCode();
-	if (!FTPReply.isPositiveCompletion(reply)) {
-	    ftp.disconnect();
-	    throw new IOException("Exception in connecting to FTP Server");
-	}
+  /** The ftp. */
+  private FTPClient ftp;
 
-	ftp.login(user, password);
+  // constructor
+
+  /**
+   * Open.
+   *
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  void open() throws IOException {
+    ftp = new FTPClient();
+
+    ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+
+    ftp.connect(server, port);
+    int reply = ftp.getReplyCode();
+    if (!FTPReply.isPositiveCompletion(reply)) {
+      ftp.disconnect();
+      throw new IOException("Exception in connecting to FTP Server");
     }
 
-    void close() throws IOException {
-	ftp.disconnect();
-    }
+    ftp.login(user, password);
+  }
+
+  /**
+   * Close.
+   *
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  void close() throws IOException {
+    ftp.disconnect();
+  }
 }

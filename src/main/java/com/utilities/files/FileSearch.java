@@ -5,83 +5,116 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+// TODO: Auto-generated Javadoc
+/** The Class FileSearch. */
 public class FileSearch {
 
-	private String fileNameToSearch;
-	private List<String> result = new ArrayList<String>();
+  /** The file name to search. */
+  private String fileNameToSearch;
 
-	public String getFileNameToSearch() {
-		return fileNameToSearch;
-	}
+  /** The result. */
+  private List<String> result = new ArrayList<String>();
 
-	public void setFileNameToSearch(String fileNameToSearch) {
-		this.fileNameToSearch = fileNameToSearch;
-	}
+  /**
+   * Gets the file name to search.
+   *
+   * @return the file name to search
+   */
+  public String getFileNameToSearch() {
+    return fileNameToSearch;
+  }
 
-	public List<String> getResult() {
-		return result;
-	}
+  /**
+   * Sets the file name to search.
+   *
+   * @param fileNameToSearch the new file name to search
+   */
+  public void setFileNameToSearch(String fileNameToSearch) {
+    this.fileNameToSearch = fileNameToSearch;
+  }
 
-	public static void main(String[] args) {
+  /**
+   * Gets the result.
+   *
+   * @return the result
+   */
+  public List<String> getResult() {
+    return result;
+  }
 
-		FileSearch fileSearch = new FileSearch();
-		String propPath = "D:\\FCUBS_Patchsets\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\INSTALLER\\SOFT\\logs\\env.properties";
-		Properties prop = new Properties();
-		try {
-			FileInputStream input = new FileInputStream(propPath);
-			prop.load(input);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		// try different directory and filename :)
-		fileSearch.searchDirectory(new File(prop.getProperty("SOURCE_PATH")), "CLDACCNT_SYS.js");
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
+  public static void main(String[] args) {
 
-		int count = fileSearch.getResult().size();
-		if (count == 0) {
-			System.out.println("\nNo result found!");
-		} else {
-			System.out.println("\nFound " + count + " result!\n");
-			for (String matched : fileSearch.getResult()) {
-				System.out.println("Found : " + matched);
-			}
-		}
-	}
+    FileSearch fileSearch = new FileSearch();
+    String propPath =
+        "D:\\FCUBS_Patchsets\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\INSTALLER\\SOFT\\logs\\env.properties";
+    Properties prop = new Properties();
+    try {
+      FileInputStream input = new FileInputStream(propPath);
+      prop.load(input);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    // try different directory and filename :)
+    fileSearch.searchDirectory(new File(prop.getProperty("SOURCE_PATH")), "CLDACCNT_SYS.js");
 
-	public void searchDirectory(File directory, String fileNameToSearch) {
+    int count = fileSearch.getResult().size();
+    if (count == 0) {
+      System.out.println("\nNo result found!");
+    } else {
+      System.out.println("\nFound " + count + " result!\n");
+      for (String matched : fileSearch.getResult()) {
+        System.out.println("Found : " + matched);
+      }
+    }
+  }
 
-		setFileNameToSearch(fileNameToSearch);
+  /**
+   * Search directory.
+   *
+   * @param directory the directory
+   * @param fileNameToSearch the file name to search
+   */
+  public void searchDirectory(File directory, String fileNameToSearch) {
 
-		if (directory.isDirectory()) {
-			search(directory);
-		} else {
-			System.out.println(directory.getAbsoluteFile() + " is not a directory!");
-		}
+    setFileNameToSearch(fileNameToSearch);
 
-	}
+    if (directory.isDirectory()) {
+      search(directory);
+    } else {
+      System.out.println(directory.getAbsoluteFile() + " is not a directory!");
+    }
+  }
 
-	private void search(File file) {
+  /**
+   * Search.
+   *
+   * @param file the file
+   */
+  private void search(File file) {
 
-		if (file.isDirectory()) {
-			System.out.println("Searching directory ... " + file.getAbsoluteFile());
+    if (file.isDirectory()) {
+      System.out.println("Searching directory ... " + file.getAbsoluteFile());
 
-			// do you have permission to read this directory?
-			if (file.canRead()) {
-				for (File temp : file.listFiles()) {
-					if (temp.isDirectory()) {
-						search(temp);
-					} else {
-						if (getFileNameToSearch().equals(temp.getName().toLowerCase())) {
-							result.add(temp.getAbsoluteFile().toString());
-						}
+      // do you have permission to read this directory?
+      if (file.canRead()) {
+        for (File temp : file.listFiles()) {
+          if (temp.isDirectory()) {
+            search(temp);
+          } else {
+            if (getFileNameToSearch().equals(temp.getName().toLowerCase())) {
+              result.add(temp.getAbsoluteFile().toString());
+            }
+          }
+        }
 
-					}
-				}
-
-			} else {
-				System.out.println(file.getAbsoluteFile() + "Permission Denied");
-			}
-		}
-
-	}
-
+      } else {
+        System.out.println(file.getAbsoluteFile() + "Permission Denied");
+      }
+    }
+  }
 }

@@ -2,44 +2,88 @@ package com.utilities.datatypes;
 
 import java.math.BigDecimal;
 
+// TODO: Auto-generated Javadoc
+/** The Class TargetClass. */
 public class TargetClass {
 
-	private String name;
-	private int age;
-	private BigDecimal id;
+  /** The name. */
+  private String name;
 
-	public TargetClass(BigDecimal id, Integer age, String name) {
-		this.id = id;
-		this.name = name;
-		this.age = age;
-	}
+  /** The age. */
+  private int age;
 
-	public TargetClass() {
-		// TODO Auto-generated constructor stub
-	}
+  /** The id. */
+  private BigDecimal id;
 
-	public String getName() {
-		return name;
-	}
+  /**
+   * Instantiates a new target class.
+   *
+   * @param id the id
+   * @param age the age
+   * @param name the name
+   */
+  public TargetClass(BigDecimal id, Integer age, String name) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  /** Instantiates a new target class. */
+  public TargetClass() {
+    // TODO Auto-generated constructor stub
+  }
 
-	public int getAge() {
-		return age;
-	}
+  /**
+   * Gets the name.
+   *
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+  /**
+   * Sets the name.
+   *
+   * @param name the new name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public BigDecimal getId() {
-		return id;
-	}
+  /**
+   * Gets the age.
+   *
+   * @return the age
+   */
+  public int getAge() {
+    return age;
+  }
 
-	public void setId(BigDecimal id) {
-		this.id = id;
-	}
+  /**
+   * Sets the age.
+   *
+   * @param age the new age
+   */
+  public void setAge(int age) {
+    this.age = age;
+  }
 
+  /**
+   * Gets the id.
+   *
+   * @return the id
+   */
+  public BigDecimal getId() {
+    return id;
+  }
+
+  /**
+   * Sets the id.
+   *
+   * @param id the new id
+   */
+  public void setId(BigDecimal id) {
+    this.id = id;
+  }
 }

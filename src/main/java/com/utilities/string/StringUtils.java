@@ -1,5 +1,10 @@
 package com.utilities.string;
 
+import com.utilities.constants.Constants;
+import com.utilities.dates.GregorianDateMatcher;
+import com.utilities.json.JsonUtils;
+import com.utilities.object.ObjectUtils;
+import com.utilities.xml.XmlUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -25,583 +29,792 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import com.utilities.constants.Constants;
-import com.utilities.dates.GregorianDateMatcher;
-import com.utilities.json.JsonUtils;
-import com.utilities.object.ObjectUtils;
-import com.utilities.xml.XmlUtils;
-
+// TODO: Auto-generated Javadoc
+/** The Class StringUtils. */
 public class StringUtils {
-    public static String[] split(String main, String cmp) {
-	Object[] obj = null;
 
-	try {
-	    String str = main;
-	    ArrayList<String> arr = new ArrayList<String>();
-	    if (main != null && !main.equals("")) {
-		String[] out;
-		if (main.indexOf(cmp) == -1) {
-		    out = new String[] { main };
-		    return out;
-		} else {
-		    int k;
-		    for (k = 0; str != null; ++k) {
-			if (str.indexOf(cmp) == str.lastIndexOf(cmp)) {
-			    if (str.indexOf(cmp) == 0) {
-				arr.add("");
-			    } else {
-				arr.add(str.substring(0, str.indexOf(cmp)));
-			    }
+  /**
+   * Split.
+   *
+   * @param main the main
+   * @param cmp the cmp
+   * @return the string[]
+   */
+  public static String[] split(String main, String cmp) {
+    Object[] obj = null;
 
-			    if (str.indexOf(cmp) == str.length() - 1) {
-				arr.add("");
-			    } else {
-				arr.add(str.substring(str.indexOf(cmp) + cmp.length(), str.length()));
-			    }
+    try {
+      String str = main;
+      ArrayList<String> arr = new ArrayList<String>();
+      if (main != null && !main.equals("")) {
+        String[] out;
+        if (main.indexOf(cmp) == -1) {
+          out = new String[] {main};
+          return out;
+        } else {
+          int k;
+          for (k = 0; str != null; ++k) {
+            if (str.indexOf(cmp) == str.lastIndexOf(cmp)) {
+              if (str.indexOf(cmp) == 0) {
+                arr.add("");
+              } else {
+                arr.add(str.substring(0, str.indexOf(cmp)));
+              }
 
-			    obj = arr.toArray();
-			    out = new String[arr.size()];
+              if (str.indexOf(cmp) == str.length() - 1) {
+                arr.add("");
+              } else {
+                arr.add(str.substring(str.indexOf(cmp) + cmp.length(), str.length()));
+              }
 
-			    for (int j = 0; j < arr.size(); ++j) {
-				out[j] = obj[j].toString();
-			    }
+              obj = arr.toArray();
+              out = new String[arr.size()];
 
-			    return out;
-			}
+              for (int j = 0; j < arr.size(); ++j) {
+                out[j] = obj[j].toString();
+              }
 
-			if (str.indexOf(cmp) == 0) {
-			    arr.add("");
-			} else {
-			    arr.add(str.substring(0, str.indexOf(cmp)));
-			}
+              return out;
+            }
 
-			str = str.substring(str.indexOf(cmp) + 1, str.length());
-		    }
+            if (str.indexOf(cmp) == 0) {
+              arr.add("");
+            } else {
+              arr.add(str.substring(0, str.indexOf(cmp)));
+            }
 
-		    obj = arr.toArray();
-		    out = new String[arr.size()];
+            str = str.substring(str.indexOf(cmp) + 1, str.length());
+          }
 
-		    for (k = 0; k < arr.size(); ++k) {
-			out[k] = obj[k].toString();
-		    }
+          obj = arr.toArray();
+          out = new String[arr.size()];
 
-		    return out;
-		}
-	    } else {
-		return null;
-	    }
-	} catch (Exception var8) {
-	    return null;
-	}
+          for (k = 0; k < arr.size(); ++k) {
+            out[k] = obj[k].toString();
+          }
+
+          return out;
+        }
+      } else {
+        return null;
+      }
+    } catch (Exception var8) {
+      return null;
+    }
+  }
+
+  /**
+   * Replace str.
+   *
+   * @param inputStr the input str
+   * @param tobeReplaced the tobe replaced
+   * @param replaceWith the replace with
+   * @return the string
+   */
+  public static String replaceStr(String inputStr, String tobeReplaced, String replaceWith) {
+    try {
+      StringBuffer sb = new StringBuffer(inputStr);
+
+      for (int index = inputStr.indexOf(tobeReplaced);
+          index != -1;
+          index = inputStr.indexOf(tobeReplaced, index + replaceWith.length())) {
+        inputStr = sb.replace(index, index + tobeReplaced.length(), replaceWith).toString();
+        sb = new StringBuffer(inputStr);
+      }
+
+      return inputStr;
+    } catch (Exception var5) {
+      return inputStr;
+    }
+  }
+
+  /**
+   * Sets the string.
+   *
+   * @param inp1 the inp 1
+   * @param inp2 the inp 2
+   * @return the string
+   */
+  public static String setString(int inp1, char inp2) {
+    String retStr = "";
+
+    for (int i = 0; i < inp1; ++i) {
+      retStr = retStr + inp2;
     }
 
-    public static String replaceStr(String inputStr, String tobeReplaced, String replaceWith) {
-	try {
-	    StringBuffer sb = new StringBuffer(inputStr);
+    return retStr;
+  }
 
-	    for (int index = inputStr.indexOf(tobeReplaced); index != -1; index = inputStr.indexOf(tobeReplaced,
-		    index + replaceWith.length())) {
-		inputStr = sb.replace(index, index + tobeReplaced.length(), replaceWith).toString();
-		sb = new StringBuffer(inputStr);
-	    }
+  /** The Constant HEXCHARS. */
+  private static final String[] HEXCHARS =
+      new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
 
-	    return inputStr;
-	} catch (Exception var5) {
-	    return inputStr;
-	}
+  /**
+   * Byte to hex.
+   *
+   * @param input the input
+   * @return the string
+   */
+  public static String byteToHex(byte[] input) {
+    StringBuilder builder = new StringBuilder();
+
+    for (int ctr = 0; ctr < input.length; ++ctr) {
+      builder.append(HEXCHARS[input[ctr] >> 4 & 15]);
+      builder.append(HEXCHARS[input[ctr] & 15]);
     }
 
-    public static String setString(int inp1, char inp2) {
-	String retStr = "";
+    String output = builder.toString();
+    return output;
+  }
 
-	for (int i = 0; i < inp1; ++i) {
-	    retStr = retStr + inp2;
-	}
+  /**
+   * Hex to byte.
+   *
+   * @param input the input
+   * @return the byte[]
+   */
+  public static byte[] hexToByte(String input) {
+    int len = input.length();
+    if (len % 2 != 0) {
+      throw new IllegalArgumentException("Input string size should be a multiple of 2 bytes.");
+    } else {
+      byte[] bytes = new byte[len / 2];
 
-	return retStr;
+      for (int ctr = 0; ctr < len; ctr += 2) {
+        bytes[ctr / 2] =
+            (byte)
+                ((Character.digit(input.charAt(ctr), 16) << 4)
+                    + Character.digit(input.charAt(ctr + 1), 16));
+      }
+
+      return bytes;
+    }
+  }
+
+  /**
+   * To hex string.
+   *
+   * @param bytes the bytes
+   * @return the string
+   */
+  public static final String toHexString(byte[] bytes) {
+    String[] HexChars =
+        new String[] {
+          "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"
+        };
+    StringBuffer sb = new StringBuffer();
+
+    for (int i = 0; i < bytes.length; ++i) {
+      sb.append(HexChars[bytes[i] >> 4 & 15]);
+      sb.append(HexChars[bytes[i] & 15]);
     }
 
-    private static final String[] HEXCHARS = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
-	    "C", "D", "E", "F" };
+    return new String(sb);
+  }
 
-    public static String byteToHex(byte[] input) {
-	StringBuilder builder = new StringBuilder();
-
-	for (int ctr = 0; ctr < input.length; ++ctr) {
-	    builder.append(HEXCHARS[input[ctr] >> 4 & 15]);
-	    builder.append(HEXCHARS[input[ctr] & 15]);
-	}
-
-	String output = builder.toString();
-	return output;
+  /**
+   * Stringto int.
+   *
+   * @param sInput the s input
+   * @return the int
+   */
+  public static int stringtoInt(String sInput) {
+    int num;
+    sInput = checkForNull(sInput);
+    if (sInput.equals("")) {
+      num = 0;
+    } else {
+      num = Integer.parseInt(sInput);
     }
 
-    public static byte[] hexToByte(String input) {
-	int len = input.length();
-	if (len % 2 != 0) {
-	    throw new IllegalArgumentException("Input string size should be a multiple of 2 bytes.");
-	} else {
-	    byte[] bytes = new byte[len / 2];
+    return num;
+  }
 
-	    for (int ctr = 0; ctr < len; ctr += 2) {
-		bytes[ctr / 2] = (byte) ((Character.digit(input.charAt(ctr), 16) << 4)
-			+ Character.digit(input.charAt(ctr + 1), 16));
-	    }
-
-	    return bytes;
-	}
+  /**
+   * Check for null.
+   *
+   * @param sInput the s input
+   * @return the string
+   */
+  public static String checkForNull(String sInput) {
+    String sOutput = "";
+    if (sInput != null) {
+      sOutput = sInput.trim();
     }
 
-    public static final String toHexString(byte[] bytes) {
-	String[] HexChars = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E",
-		"F" };
-	StringBuffer sb = new StringBuffer();
+    return sOutput;
+  }
 
-	for (int i = 0; i < bytes.length; ++i) {
-	    sb.append(HexChars[bytes[i] >> 4 & 15]);
-	    sb.append(HexChars[bytes[i] & 15]);
-	}
+  /**
+   * Validate parameter.
+   *
+   * @param input the input
+   * @return the string
+   */
+  public static String validateParameter(String input) {
+    if (input == null) {
+      return null;
+    }
+    if ("".equalsIgnoreCase(input)) {
+      return "";
+    }
+    StringWriter writer = new StringWriter((int) (input.length() * 1.5D));
+    int length = input.length();
+    if (length > 4000) {
+      return "";
+    }
+    for (int ctr = 0; ctr < length; ctr++) {
+      char token = input.charAt(ctr);
+      if ((token == '&')
+          || (token == '(')
+          || (token == ')')
+          || (token == '+')
+          || (token == ',')
+          || (token == '/')
+          || (token == '<')
+          || (token == '\006')
+          || (token == '\\')) {
+        return "";
+      }
+      writer.write(token);
+    }
+    return writer.toString();
+  }
 
-	return new String(sb);
+  /**
+   * Validate string.
+   *
+   * @param input the input
+   * @return the string
+   */
+  public String validateString(String input) {
+    if (input == null) {
+      return null;
+    }
+    if ("".equalsIgnoreCase(input)) {
+      return "";
+    }
+    StringWriter writer = new StringWriter((int) (input.length() * 1.5D));
+    int length = input.length();
+    for (int ctr = 0; ctr < length; ctr++) {
+      char token = input.charAt(ctr);
+      if (((token >= '0') && (token <= '9'))
+          || ((token >= 'A') && (token <= 'Z'))
+          || ((token >= 'a') && (token <= 'z'))
+          || (token == '_')) {
+        writer.write(token);
+      } else {
+        return "";
+      }
+    }
+    return writer.toString();
+  }
+
+  /**
+   * To camel case.
+   *
+   * @param init the init
+   * @return the string
+   */
+  /*
+   * private static final String[] HEXCHARS = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+   * "A", "B", "C", "D", "E", "F" };
+   *
+   * public static String byteToHex(byte[] input) { StringBuilder builder = new StringBuilder(); for
+   * (int ctr = 0; ctr < input.length; ctr++) { builder.append(HEXCHARS[(input[ctr] >> 4 & 0xF)]);
+   * builder.append(HEXCHARS[(input[ctr] & 0xF)]); } String output = builder.toString(); return
+   * output; }
+   *
+   * public static byte[] hexToByte(String input) { int len = input.length(); if (len % 2 != 0) {
+   * throw new IllegalArgumentException("Input string size should be a multiple of 2 bytes." ); }
+   * byte[] bytes = new byte[len / 2]; for (int ctr = 0; ctr < len; ctr += 2) { bytes[(ctr / 2)] =
+   * ((byte) ((Character.digit(input.charAt(ctr), 16) << 4) + Character.digit(input.charAt(ctr + 1),
+   * 16))); } return bytes; }
+   */
+  public static String toCamelCase(String init) {
+    if (init == null) return null;
+
+    final StringBuilder ret = new StringBuilder(init.length());
+
+    for (final String word : init.split(" ")) {
+      if (!word.isEmpty()) {
+        ret.append(word.substring(0, 1).toUpperCase());
+        ret.append(word.substring(1).toLowerCase());
+      }
+      if (!(ret.length() == init.length())) ret.append(" ");
     }
 
-    public static int stringtoInt(String sInput) {
-	int num;
-	sInput = checkForNull(sInput);
-	if (sInput.equals("")) {
-	    num = 0;
-	} else {
-	    num = Integer.parseInt(sInput);
-	}
+    return ret.toString();
+  }
 
-	return num;
+  /**
+   * To camel case.
+   *
+   * @param init the init
+   * @param regexPattern the regex pattern
+   * @return the string
+   */
+  public static String toCamelCase(String init, String regexPattern) {
+    if (init == null) return null;
+
+    final StringBuilder ret = new StringBuilder(init.length());
+
+    for (String word : init.split(regexPattern)) {
+      if (!word.isEmpty()) {
+        ret.append(word.substring(0, 1).toUpperCase());
+        ret.append(word.substring(1).toLowerCase());
+      }
+      // if (!(ret.length() == init.length()))
+      // ret.append(" ");
     }
 
-    public static String checkForNull(String sInput) {
-	String sOutput = "";
-	if (sInput != null) {
-	    sOutput = sInput.trim();
-	}
+    return ret.toString();
+  }
 
-	return sOutput;
+  /**
+   * Checks if is integer.
+   *
+   * @param input the input
+   * @return true, if is integer
+   */
+  public static boolean isInteger(String input) {
+
+    try {
+      Integer.parseInt(input);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
+   * Checks if is double.
+   *
+   * @param str the str
+   * @return true, if is double
+   */
+  public static boolean isDouble(String str) {
+
+    try {
+      Double.parseDouble(str);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  /**
+   * Checks if is float.
+   *
+   * @param str the str
+   * @return true, if is float
+   */
+  public static boolean isFloat(String str) {
+
+    try {
+      Float.parseFloat(str);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  /**
+   * Checks if is valid date.
+   *
+   * @param inDate the in date
+   * @return true, if is valid date
+   */
+  public static boolean isValidDate(String inDate) {
+    // SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss:ms");
+    // dateFormat.setLenient(false);
+    // try {
+    // dateFormat.parse(inDate.trim());
+    // } catch (Exception pe) {
+    // return false;
+    // }
+    // return true;
+    return GregorianDateMatcher.dateMatches(inDate);
+  }
+
+  /**
+   * Checks if is valid timestamp.
+   *
+   * @param str the str
+   * @return true, if is valid timestamp
+   */
+  public static boolean isValidTimestamp(String str) {
+    return GregorianDateMatcher.tsMatches(str);
+  }
+
+  /**
+   * Checks if is date timestamp valid.
+   *
+   * @param str the str
+   * @return true, if is date timestamp valid
+   */
+  public static boolean isDateTimestampValid(String str) {
+    String[] dateTime = str.split(" ");
+    switch (dateTime.length) {
+      case 1:
+        return GregorianDateMatcher.dateMatches(dateTime[0]);
+      case 2:
+        return GregorianDateMatcher.dateMatches(dateTime[0])
+            && GregorianDateMatcher.tsMatches(dateTime[1]);
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Convert document to string.
+   *
+   * @param doc the doc
+   * @return the string
+   */
+  public static String convertDocumentToString(Document doc) {
+    TransformerFactory tf = TransformerFactory.newInstance();
+    Transformer transformer;
+    try {
+      transformer = tf.newTransformer();
+      // below code to remove XML declaration
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+      StringWriter writer = new StringWriter();
+      transformer.transform(new DOMSource(doc), new StreamResult(writer));
+      String output = writer.getBuffer().toString();
+      return output;
+    } catch (TransformerException e) {
+      e.printStackTrace();
     }
 
-    public static String validateParameter(String input) {
-	if (input == null) {
-	    return null;
-	}
-	if ("".equalsIgnoreCase(input)) {
-	    return "";
-	}
-	StringWriter writer = new StringWriter((int) (input.length() * 1.5D));
-	int length = input.length();
-	if (length > 4000) {
-	    return "";
-	}
-	for (int ctr = 0; ctr < length; ctr++) {
-	    char token = input.charAt(ctr);
-	    if ((token == '&') || (token == '(') || (token == ')') || (token == '+') || (token == ',') || (token == '/')
-		    || (token == '<') || (token == '\006') || (token == '\\')) {
-		return "";
-	    }
-	    writer.write(token);
-	}
-	return writer.toString();
+    return null;
+  }
+
+  /**
+   * Convert string to XML document.
+   *
+   * @param xmlString the xml string
+   * @return the document
+   */
+  public static Document convertStringToXMLDocument(String xmlString) {
+    // Parser that produces DOM object trees from XML content
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+    // API to obtain DOM Document instance
+    DocumentBuilder builder = null;
+    try {
+      // Create DocumentBuilder with default configuration
+      builder = factory.newDocumentBuilder();
+
+      // Parse the content to Document object
+      Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+      return doc;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
+   * Gets the var name.
+   *
+   * @param colName the col name
+   * @return the var name
+   */
+  public static String getVarName(String colName) {
+    String res = "";
+    if ((colName != null) && (colName != "")) {
+      colName = colName.toLowerCase();
+      String[] resAr = colName.split("_", -1);
+      for (int i = 0; i < resAr.length; i++) {
+        if (i == 0) {
+          res = res + resAr[i];
+        } else {
+          res =
+              res
+                  + resAr[i].replaceFirst(
+                      new StringBuilder().append(resAr[i].charAt(0)).append("").toString(),
+                      new StringBuilder()
+                          .append(resAr[i].charAt(0))
+                          .append("")
+                          .toString()
+                          .toUpperCase());
+        }
+      }
+    }
+    return res;
+  }
+
+  /**
+   * Generate id.
+   *
+   * @return the string
+   */
+  public static String generateId() {
+    String id = null;
+    try {
+      // Initialize SecureRandom
+      // This is a lengthy operation, to be done only upon
+      // initialization of the application
+      SecureRandom prng = SecureRandom.getInstance("SHA1PRNG");
+
+      // generate a random number
+      String randomNum = Integer.valueOf(prng.nextInt()).toString();
+
+      // get its digest
+      MessageDigest sha = MessageDigest.getInstance("SHA-1");
+      byte[] result = sha.digest(randomNum.getBytes());
+
+      id = hexEncode(result);
+    } catch (NoSuchAlgorithmException ex) {
+      System.err.println(ex);
+    }
+    return id;
+  }
+
+  /**
+   * The byte[] returned by MessageDigest does not have a nice textual representation, so some form
+   * of encoding is usually performed.
+   *
+   * <p>This implementation follows the example of David Flanagan's book "Java In A Nutshell", and
+   * converts a byte array into a String of hex characters.
+   *
+   * <p>Another popular alternative is to use a "Base64" encoding.
+   *
+   * @param input the input
+   * @return the string
+   */
+  private static String hexEncode(byte[] input) {
+    StringBuilder result = new StringBuilder();
+    char[] digits = {
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
+    for (int idx = 0; idx < input.length; ++idx) {
+      byte b = input[idx];
+      result.append(digits[(b & 0xf0) >> 4]);
+      result.append(digits[b & 0x0f]);
+    }
+    return result.toString();
+  }
+
+  /**
+   * Contains special char.
+   *
+   * @return true, if successful
+   */
+  public static boolean containsSpecialChar() {
+    Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+    Matcher m = p.matcher("I am a string");
+    boolean b = m.find();
+    return b;
+  }
+
+  /**
+   * To string.
+   *
+   * @param args the args
+   * @param startWith the start with
+   * @param endWith the end with
+   * @param dataSeparator the data separator
+   */
+  public static void toString(
+      String[] args, String startWith, String endWith, String dataSeparator) {
+    String result = startWith;
+    for (int i = 0; i < args.length; i++) {
+      if (i == (args.length - 1)) result = result + args[i];
+      else result = result + args[i] + dataSeparator;
+    }
+    result = result + endWith;
+  }
+
+  /**
+   * Gets the body content.
+   *
+   * @param objReqInpStream the obj req inp stream
+   * @param contentLength the content length
+   * @return the body content
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public static String getBodyContent(InputStream objReqInpStream, int contentLength)
+      throws IOException {
+    int offset = 0;
+    char[] requestCharacters = new char[contentLength];
+    InputStreamReader reader = new InputStreamReader(objReqInpStream, "utf-8");
+    for (; ; ) {
+      int noOfReadChars = reader.read(requestCharacters, offset, contentLength - offset);
+      if ((noOfReadChars == -1) || (noOfReadChars == 0)) {
+        break;
+      }
+      offset += noOfReadChars;
+    }
+    if (objReqInpStream != null) {
+      objReqInpStream.close();
+    }
+    StringBuffer sb = new StringBuffer();
+    sb.append(requestCharacters, 0, offset);
+
+    return sb.toString();
+  }
+
+  /**
+   * Generate jaxb resp class name.
+   *
+   * @param reqClassName the req class name
+   * @param serviceName the service name
+   * @return the string
+   */
+  public static String generateJaxbRespClassName(String reqClassName, String serviceName) {
+    String pkg = reqClassName;
+    String[] strArr = reqClassName.split("\\.");
+    reqClassName = strArr[strArr.length - 1];
+    pkg = pkg.replace(reqClassName, "");
+    int idx = reqClassName.indexOf("By");
+
+    if (idx > 0) {
+      reqClassName = reqClassName.substring(0, idx);
+      reqClassName = reqClassName + "Resp";
+    } else {
+      idx = reqClassName.indexOf("All");
+      if (idx > 0) {
+        reqClassName = reqClassName.substring(0, idx);
+        reqClassName = reqClassName + serviceName.replace("Service", "") + "ListResp";
+      } else {
+        idx = reqClassName.indexOf("Req");
+        if (idx > 0 && reqClassName.startsWith("Query")) {
+          reqClassName = reqClassName.substring(0, idx);
+          reqClassName = reqClassName + "ListResp";
+        }
+      }
+    }
+    if (reqClassName.startsWith("Delete")) {
+      reqClassName = "DeleteResp";
+    }
+    reqClassName = pkg + reqClassName.replace("Req", "Resp");
+    return reqClassName;
+  }
+
+  /**
+   * Stringify.
+   *
+   * @param str the str
+   * @return the string
+   */
+  public static String stringify(String str) {
+    try {
+      if (!str.equals(null) && !str.equals("")) {
+        return str;
+      } else return "";
+    } catch (NullPointerException e) {
+      return "";
+    }
+  }
+
+  /**
+   * Stringify.
+   *
+   * @param str the str
+   * @param ifNullString the if null string
+   * @return the string
+   */
+  public static String stringify(String str, String ifNullString) {
+    if (!ObjectUtils.isNull(str)) {
+      return str;
+    } else {
+      if (!ObjectUtils.isNull(ifNullString)) {
+        return ifNullString;
+      } else return "";
+    }
+  }
+
+  /**
+   * Gets the content type.
+   *
+   * @param req the req
+   * @return the content type
+   */
+  public static String getContentType(String req) {
+    if (XmlUtils.isXML(req)) {
+      return Constants.CONTENT_TYPE_XML;
+    } else if (JsonUtils.jacksonJSON(req)) {
+      return Constants.CONTENT_TYPE_JSON;
+    } else {
+      try {
+        // Must be unrecognized text format
+        return Constants.CONTENT_TYPE_TEXT;
+      } catch (Exception e) {
+        return null;
+      }
+    }
+  }
+
+  /**
+   * To string.
+   *
+   * @param obj the obj
+   * @return the string
+   */
+  public static String toString(Object obj) {
+    StringBuilder result = new StringBuilder();
+    String newLine = System.getProperty("line.separator");
+
+    result.append(obj.getClass().getName());
+    result.append(" Object {");
+    result.append(newLine);
+
+    Method[] methods = obj.getClass().getDeclaredMethods();
+    for (Method method : methods) {
+      if (method.getName().startsWith("get")) {
+        Object output;
+        try {
+          output = method.invoke(new Object[] {});
+          System.out.println(method.getName().replaceFirst("get", "") + ":" + output);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
     }
 
-    public String validateString(String input) {
-	if (input == null) {
-	    return null;
-	}
-	if ("".equalsIgnoreCase(input)) {
-	    return "";
-	}
-	StringWriter writer = new StringWriter((int) (input.length() * 1.5D));
-	int length = input.length();
-	for (int ctr = 0; ctr < length; ctr++) {
-	    char token = input.charAt(ctr);
-	    if (((token >= '0') && (token <= '9')) || ((token >= 'A') && (token <= 'Z'))
-		    || ((token >= 'a') && (token <= 'z')) || (token == '_')) {
-		writer.write(token);
-	    } else {
-		return "";
-	    }
-	}
-	return writer.toString();
+    // determine fields declared in this class only (no fields of superclass)
+    Field[] fields = obj.getClass().getDeclaredFields();
+
+    // print field names paired with their values
+    for (Field field : fields) {
+      result.append("  ");
+      try {
+        result.append(field.getName());
+        result.append(": ");
+        // requires access to private field:
+        result.append(field.get(obj));
+      } catch (IllegalAccessException ex) {
+        System.out.println(ex);
+      }
+      result.append(newLine);
     }
+    result.append("}");
 
-    /*
-     * private static final String[] HEXCHARS = { "0", "1", "2", "3", "4", "5", "6",
-     * "7", "8", "9", "A", "B", "C", "D", "E", "F" };
-     * 
-     * public static String byteToHex(byte[] input) { StringBuilder builder = new
-     * StringBuilder(); for (int ctr = 0; ctr < input.length; ctr++) {
-     * builder.append(HEXCHARS[(input[ctr] >> 4 & 0xF)]);
-     * builder.append(HEXCHARS[(input[ctr] & 0xF)]); } String output =
-     * builder.toString(); return output; }
-     * 
-     * public static byte[] hexToByte(String input) { int len = input.length(); if
-     * (len % 2 != 0) { throw new
-     * IllegalArgumentException("Input string size should be a multiple of 2 bytes."
-     * ); } byte[] bytes = new byte[len / 2]; for (int ctr = 0; ctr < len; ctr += 2)
-     * { bytes[(ctr / 2)] = ((byte) ((Character.digit(input.charAt(ctr), 16) << 4) +
-     * Character.digit(input.charAt(ctr + 1), 16))); } return bytes; }
-     */
-    public static String toCamelCase(String init) {
-	if (init == null)
-	    return null;
+    return result.toString();
+  }
 
-	final StringBuilder ret = new StringBuilder(init.length());
-
-	for (final String word : init.split(" ")) {
-	    if (!word.isEmpty()) {
-		ret.append(word.substring(0, 1).toUpperCase());
-		ret.append(word.substring(1).toLowerCase());
-	    }
-	    if (!(ret.length() == init.length()))
-		ret.append(" ");
-	}
-
-	return ret.toString();
+  /**
+   * List to string.
+   *
+   * @param list the list
+   * @return the string
+   */
+  public static String listToString(List<?> list) {
+    String result = "";
+    if (list != null) {
+      Iterator<?> iterator = list.iterator();
+      while (iterator.hasNext()) {
+        result = "[" + iterator.next().toString() + "]";
+      }
     }
-
-    public static String toCamelCase(String init, String regexPattern) {
-	if (init == null)
-	    return null;
-
-	final StringBuilder ret = new StringBuilder(init.length());
-
-	for (String word : init.split(regexPattern)) {
-	    if (!word.isEmpty()) {
-		ret.append(word.substring(0, 1).toUpperCase());
-		ret.append(word.substring(1).toLowerCase());
-	    }
-	    // if (!(ret.length() == init.length()))
-	    // ret.append(" ");
-	}
-
-	return ret.toString();
-    }
-
-    public static boolean isInteger(String input) {
-
-	try {
-	    Integer.parseInt(input);
-	    return true;
-	} catch (Exception e) {
-	    return false;
-	}
-    }
-
-    public static boolean isDouble(String str) {
-
-	try {
-	    Double.parseDouble(str);
-	    return true;
-	} catch (NumberFormatException e) {
-	    return false;
-	}
-    }
-
-    public static boolean isFloat(String str) {
-
-	try {
-	    Float.parseFloat(str);
-	    return true;
-	} catch (NumberFormatException e) {
-	    return false;
-	}
-    }
-
-    public static boolean isValidDate(String inDate) {
-	// SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss:ms");
-	// dateFormat.setLenient(false);
-	// try {
-	// dateFormat.parse(inDate.trim());
-	// } catch (Exception pe) {
-	// return false;
-	// }
-	// return true;
-	return GregorianDateMatcher.dateMatches(inDate);
-    }
-
-    public static boolean isValidTimestamp(String str) {
-	return GregorianDateMatcher.tsMatches(str);
-    }
-
-    public static boolean isDateTimestampValid(String str) {
-	String[] dateTime = str.split(" ");
-	switch (dateTime.length) {
-	case 1:
-	    return GregorianDateMatcher.dateMatches(dateTime[0]);
-	case 2:
-	    return GregorianDateMatcher.dateMatches(dateTime[0]) && GregorianDateMatcher.tsMatches(dateTime[1]);
-	default:
-	    return false;
-	}
-    }
-
-    public static String convertDocumentToString(Document doc) {
-	TransformerFactory tf = TransformerFactory.newInstance();
-	Transformer transformer;
-	try {
-	    transformer = tf.newTransformer();
-	    // below code to remove XML declaration
-	    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-	    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-	    StringWriter writer = new StringWriter();
-	    transformer.transform(new DOMSource(doc), new StreamResult(writer));
-	    String output = writer.getBuffer().toString();
-	    return output;
-	} catch (TransformerException e) {
-	    e.printStackTrace();
-	}
-
-	return null;
-    }
-
-    public static Document convertStringToXMLDocument(String xmlString) {
-	// Parser that produces DOM object trees from XML content
-	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-	// API to obtain DOM Document instance
-	DocumentBuilder builder = null;
-	try {
-	    // Create DocumentBuilder with default configuration
-	    builder = factory.newDocumentBuilder();
-
-	    // Parse the content to Document object
-	    Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
-	    return doc;
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	return null;
-    }
-
-    public static String getVarName(String colName) {
-	String res = "";
-	if ((colName != null) && (colName != "")) {
-	    colName = colName.toLowerCase();
-	    String[] resAr = colName.split("_", -1);
-	    for (int i = 0; i < resAr.length; i++) {
-		if (i == 0) {
-		    res = res + resAr[i];
-		} else {
-		    res = res + resAr[i].replaceFirst(
-			    new StringBuilder().append(resAr[i].charAt(0)).append("").toString(),
-			    new StringBuilder().append(resAr[i].charAt(0)).append("").toString().toUpperCase());
-		}
-	    }
-	}
-	return res;
-    }
-
-    public static String generateId() {
-	String id = null;
-	try {
-	    // Initialize SecureRandom
-	    // This is a lengthy operation, to be done only upon
-	    // initialization of the application
-	    SecureRandom prng = SecureRandom.getInstance("SHA1PRNG");
-
-	    // generate a random number
-	    String randomNum = Integer.valueOf(prng.nextInt()).toString();
-
-	    // get its digest
-	    MessageDigest sha = MessageDigest.getInstance("SHA-1");
-	    byte[] result = sha.digest(randomNum.getBytes());
-
-	    id = hexEncode(result);
-	} catch (NoSuchAlgorithmException ex) {
-	    System.err.println(ex);
-	}
-	return id;
-    }
-
-    /**
-     * The byte[] returned by MessageDigest does not have a nice textual
-     * representation, so some form of encoding is usually performed.
-     *
-     * This implementation follows the example of David Flanagan's book "Java In A
-     * Nutshell", and converts a byte array into a String of hex characters.
-     *
-     * Another popular alternative is to use a "Base64" encoding.
-     */
-    static private String hexEncode(byte[] input) {
-	StringBuilder result = new StringBuilder();
-	char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	for (int idx = 0; idx < input.length; ++idx) {
-	    byte b = input[idx];
-	    result.append(digits[(b & 0xf0) >> 4]);
-	    result.append(digits[b & 0x0f]);
-	}
-	return result.toString();
-    }
-
-    public static boolean containsSpecialChar() {
-	Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-	Matcher m = p.matcher("I am a string");
-	boolean b = m.find();
-	return b;
-    }
-
-    public static void toString(String[] args, String startWith, String endWith, String dataSeparator) {
-	String result = startWith;
-	for (int i = 0; i < args.length; i++) {
-	    if (i == (args.length - 1))
-		result = result + args[i];
-	    else
-		result = result + args[i] + dataSeparator;
-	}
-	result = result + endWith;
-    }
-
-    public static String getBodyContent(InputStream objReqInpStream, int contentLength) throws IOException {
-	int offset = 0;
-	char[] requestCharacters = new char[contentLength];
-	InputStreamReader reader = new InputStreamReader(objReqInpStream, "utf-8");
-	for (;;) {
-	    int noOfReadChars = reader.read(requestCharacters, offset, contentLength - offset);
-	    if ((noOfReadChars == -1) || (noOfReadChars == 0)) {
-		break;
-	    }
-	    offset += noOfReadChars;
-	}
-	if (objReqInpStream != null) {
-	    objReqInpStream.close();
-	}
-	StringBuffer sb = new StringBuffer();
-	sb.append(requestCharacters, 0, offset);
-
-	return sb.toString();
-    }
-
-    public static String generateJaxbRespClassName(String reqClassName, String serviceName) {
-	String pkg = reqClassName;
-	String[] strArr = reqClassName.split("\\.");
-	reqClassName = strArr[strArr.length - 1];
-	pkg = pkg.replace(reqClassName, "");
-	int idx = reqClassName.indexOf("By");
-
-	if (idx > 0) {
-	    reqClassName = reqClassName.substring(0, idx);
-	    reqClassName = reqClassName + "Resp";
-	} else {
-	    idx = reqClassName.indexOf("All");
-	    if (idx > 0) {
-		reqClassName = reqClassName.substring(0, idx);
-		reqClassName = reqClassName + serviceName.replace("Service", "") + "ListResp";
-	    } else {
-		idx = reqClassName.indexOf("Req");
-		if (idx > 0 && reqClassName.startsWith("Query")) {
-		    reqClassName = reqClassName.substring(0, idx);
-		    reqClassName = reqClassName + "ListResp";
-		}
-	    }
-	}
-	if (reqClassName.startsWith("Delete")) {
-	    reqClassName = "DeleteResp";
-	}
-	reqClassName = pkg + reqClassName.replace("Req", "Resp");
-	return reqClassName;
-    }
-
-    public static String stringify(String str) {
-	try {
-	    if (!str.equals(null) && !str.equals("")) {
-		return str;
-	    } else
-		return "";
-	} catch (NullPointerException e) {
-	    return "";
-	}
-    }
-
-    public static String stringify(String str, String ifNullString) {
-	if (!ObjectUtils.isNull(str)) {
-	    return str;
-	} else {
-	    if (!ObjectUtils.isNull(ifNullString)) {
-		return ifNullString;
-	    } else
-		return "";
-	}
-    }
-
-    public static String getContentType(String req) {
-	if (XmlUtils.isXML(req)) {
-	    return Constants.CONTENT_TYPE_XML;
-	} else if (JsonUtils.jacksonJSON(req)) {
-	    return Constants.CONTENT_TYPE_JSON;
-	} else {
-	    try {
-		// Must be unrecognized text format
-		return Constants.CONTENT_TYPE_TEXT;
-	    } catch (Exception e) {
-		return null;
-	    }
-
-	}
-    }
-
-    public static String toString(Object obj) {
-	StringBuilder result = new StringBuilder();
-	String newLine = System.getProperty("line.separator");
-
-	result.append(obj.getClass().getName());
-	result.append(" Object {");
-	result.append(newLine);
-
-	Method[] methods = obj.getClass().getDeclaredMethods();
-	for (Method method : methods) {
-	    if (method.getName().startsWith("get")) {
-		Object output;
-		try {
-		    output = method.invoke(new Object[] {});
-		    System.out.println(method.getName().replaceFirst("get", "") + ":" + output);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-	    }
-	}
-
-	// determine fields declared in this class only (no fields of superclass)
-	Field[] fields = obj.getClass().getDeclaredFields();
-
-	// print field names paired with their values
-	for (Field field : fields) {
-	    result.append("  ");
-	    try {
-		result.append(field.getName());
-		result.append(": ");
-		// requires access to private field:
-		result.append(field.get(obj));
-	    } catch (IllegalAccessException ex) {
-		System.out.println(ex);
-	    }
-	    result.append(newLine);
-	}
-	result.append("}");
-
-	return result.toString();
-    }
-
-    public static String listToString(List<?> list) {
-	String result = "";
-	if (list != null) {
-	    Iterator<?> iterator = list.iterator();
-	    while (iterator.hasNext()) {
-		result = "[" + iterator.next().toString() + "]";
-	    }
-	}
-	return result;
-    }
-
+    return result;
+  }
 }

@@ -1,12 +1,34 @@
 package com.utilities.mbean;
 
+// TODO: Auto-generated Javadoc
+/** The Interface AppBean. */
 public interface AppBean {
 
-    public String getBeanAttributes();
+  /**
+   * Gets the bean attributes.
+   *
+   * @return the bean attributes
+   */
+  public String getBeanAttributes();
 
-    public String getBeanIdentifier();
+  /**
+   * Gets the bean identifier.
+   *
+   * @return the bean identifier
+   */
+  public String getBeanIdentifier();
 
-    public String getAttributeDataType();
+  /**
+   * Gets the attribute data type.
+   *
+   * @return the attribute data type
+   */
+  public String getAttributeDataType();
 
-    public void updateBean(Object[] args);
+  /**
+   * Update bean.
+   *
+   * @param args the args
+   */
+  public void updateBean(Object[] args);
 }

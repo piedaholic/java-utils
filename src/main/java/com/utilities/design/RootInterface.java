@@ -1,5 +1,4 @@
 package com.utilities.design;
 
-public interface RootInterface {
-
-}
+/** The Interface RootInterface. */
+public interface RootInterface {}

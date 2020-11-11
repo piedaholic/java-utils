@@ -144,7 +144,7 @@ public class TopicUtils {
       Topic l_topic = (Topic) l_jndiContext.lookup(p_topic_name);
       TopicConnection tc = l_tcf.createTopicConnection();
       if (!l_within_container) {
-        tc.setClientID("FCUBS_NOTIFY");
+        tc.setClientID("_NOTIFY");
       }
       tc.start();
       TopicSession ts = tc.createTopicSession(p_transacted, 1);

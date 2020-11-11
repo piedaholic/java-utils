@@ -19,7 +19,7 @@ public class PropertiesTest {
     // from file "myProperties.txt"
     FileInputStream propFile =
         new FileInputStream(
-            "D:\\Temp\\RABOELCM\\runtime\\Properties\\application\\fcubs.properties");
+            "D:\\Temp\\RABOELCM\\runtime\\Properties\\application\\.properties");
     Properties p = new Properties(System.getProperties());
     p.load(propFile);
 

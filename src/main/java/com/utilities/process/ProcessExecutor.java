@@ -17,10 +17,10 @@ public class ProcessExecutor {
    */
   public static void main(String[] args) {
     try {
-      // execute("D:\\Patchsets\\FCUBS\\FCUBS_12.3.0.9.5\\INSTALLER\\SOFT\\ROFCEarRun.bat");
+      // execute("D:\\Patchsets\\\\_12.3.0.9.5\\INSTALLER\\SOFT\\ROFCEarRun.bat");
       // execute("D:\\Development\\Windows\\HelloWorld.bat");
       // executeBatchFile("D:\\Development\\Windows\\HelloWorld.bat");
-      executeBatchFile("D:\\Patchsets\\FCUBS\\FCUBS_12.3.0.9.5\\INSTALLER\\SOFT\\ROFCEarRun.bat");
+      executeBatchFile("D:\\Patchsets\\\\_12.3.0.9.5\\INSTALLER\\SOFT\\ROFCEarRun.bat");
     } catch (Exception e) {
       // TODO: handle exception
       e.printStackTrace();

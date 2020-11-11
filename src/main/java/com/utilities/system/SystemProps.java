@@ -19,7 +19,7 @@ public class SystemProps {
       BufferedInputStream bis =
           new BufferedInputStream(
               new FileInputStream(
-                  "D:\\Temp\\RABOELCM\\runtime\\Properties\\application\\fcubs.properties"));
+                  "D:\\Temp\\RABOELCM\\runtime\\Properties\\application\\.properties"));
       appProps.load(bis);
     } catch (Exception e) {
       // TODO: handle exception

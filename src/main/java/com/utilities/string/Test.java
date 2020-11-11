@@ -15,7 +15,7 @@ public class Test {
     String file = "C:/Desk/Test.py";
     String artifactName = file.substring(file.lastIndexOf("/") + 1, file.lastIndexOf("."));
     System.out.println(artifactName);
-    String fileName = "FCUBSAccServiceear";
-    System.out.println(fileName.matches("FCUBS([A-Za-z0-9]*)Service\\.(.*)"));
+    String fileName = "AccServiceear";
+    System.out.println(fileName.matches("([A-Za-z0-9]*)Service\\.(.*)"));
   }
 }

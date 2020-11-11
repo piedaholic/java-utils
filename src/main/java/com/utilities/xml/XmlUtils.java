@@ -224,29 +224,6 @@ public class XmlUtils {
   }
 
   /**
-   * Validate req XML for DTD.
-   *
-   * @param reqXML the req XML
-   * @return true, if successful
-   */
-  public static boolean validateReqXMLForDTD(String reqXML) {
-    boolean dtdFlag = false;
-    String testString = "";
-    if (reqXML.indexOf("<FCJMSG") >= 0) {
-      testString = reqXML.substring(0, reqXML.indexOf("<FCJMSG"));
-    } else if (reqXML.indexOf("<FCUBS_REQ_ENV>") >= 0) {
-      testString = reqXML.substring(0, reqXML.indexOf("<FCUBS_REQ_ENV>"));
-    } else {
-      testString = reqXML;
-    }
-    testString = testString.trim().toUpperCase();
-    if ((testString.contains("<!DOCTYPE")) || (testString.contains("<!ELEMENT"))) {
-      dtdFlag = true;
-    }
-    return dtdFlag;
-  }
-
-  /**
    * Checks for child elements.
    *
    * @param el the el

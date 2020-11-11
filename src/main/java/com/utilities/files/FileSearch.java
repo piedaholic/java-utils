@@ -51,7 +51,7 @@ public class FileSearch {
 
     FileSearch fileSearch = new FileSearch();
     String propPath =
-        "D:\\FCUBS_Patchsets\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\FCUBS_12.3.0.0.11\\INSTALLER\\SOFT\\logs\\env.properties";
+        "D:\\_Patchsets\\_12.3.0.0.11\\_12.3.0.0.11\\_12.3.0.0.11\\INSTALLER\\SOFT\\logs\\env.properties";
     Properties prop = new Properties();
     try {
       FileInputStream input = new FileInputStream(propPath);

@@ -66,7 +66,7 @@ public class QueueWriter {
   private static String p_JMS_QCF = "AIRQCF";
 
   /** The p JM S QUEU E NAME. */
-  private static String p_JMS_QUEUE_NAME = "CBT_FCUBS_AIR_BATCH";
+  private static String p_JMS_QUEUE_NAME = "CBT__AIR_BATCH";
 
   /** The p JM S Q ACKNOWLEDGE. */
   private static String p_JMS_Q_ACKNOWLEDGE = "AUTO_ACKNOWLEDGE";

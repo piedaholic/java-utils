@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.piedaholic.java.utilities</groupId>
+	<groupId>org.piedaholic</groupId>
 	<artifactId>java-utilities</artifactId>
 	<version>1.0.0.CI-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -17,7 +17,7 @@
 		<spring.framework.version>3.0.6.RELEASE</spring.framework.version>
 		<checkstyle.plugin.version>3.1.1</checkstyle.plugin.version>
 		<checkstyle.version>8.29</checkstyle.version>
-		<checkstyle.configdir>src/site/resources/checkstyle</checkstyle.configdir>
+		<checkstyle.configdir>src/resources/checkstyle</checkstyle.configdir>
 	</properties>
 	<dependencies>
 		<dependency>
